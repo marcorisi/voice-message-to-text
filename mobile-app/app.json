@@ -17,6 +17,9 @@
     "plugins": [
       "expo-share-intent"
     ],
+    "scripts": {
+      "postinstall": "patch-package"
+    },
     "scheme": "voice-message-to-text",
     "ios": {
       "supportsTablet": true
