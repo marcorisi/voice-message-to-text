@@ -14,6 +14,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      "expo-share-intent"
+    ],
+    "scheme": "voice-message-to-text",
     "ios": {
       "supportsTablet": true
     },
