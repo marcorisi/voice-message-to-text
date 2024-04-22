@@ -29,6 +29,28 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "ShareExtension",
+                  "bundleIdentifier": "undefined.share-extension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.undefined"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "projectId": "12521354-aa08-43de-8c70-ef9880db6111"
+      }
     }
   }
 }
