@@ -25,7 +25,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.marcorisi.voicemessagetotext"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,17 +36,7 @@
         "build": {
           "experimental": {
             "ios": {
-              "appExtensions": [
-                {
-                  "targetName": "ShareExtension",
-                  "bundleIdentifier": "undefined.share-extension",
-                  "entitlements": {
-                    "com.apple.security.application-groups": [
-                      "group.undefined"
-                    ]
-                  }
-                }
-              ]
+              "appExtensions": []
             }
           }
         },
