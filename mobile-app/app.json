@@ -17,9 +17,6 @@
     "plugins": [
       "expo-share-intent"
     ],
-    "scripts": {
-      "postinstall": "patch-package"
-    },
     "scheme": "voice-message-to-text",
     "ios": {
       "supportsTablet": true
@@ -36,13 +33,6 @@
     },
     "extra": {
       "eas": {
-        "build": {
-          "experimental": {
-            "ios": {
-              "appExtensions": []
-            }
-          }
-        },
         "projectId": "12521354-aa08-43de-8c70-ef9880db6111"
       }
     }
