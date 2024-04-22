@@ -15,7 +15,14 @@
       "**/*"
     ],
     "plugins": [
-      "expo-share-intent"
+      [
+        "expo-share-intent",
+        { 
+          "androidIntentFilters": [ 
+            "audio/*" 
+          ] 
+        }
+      ]
     ],
     "scheme": "voice-message-to-text",
     "ios": {
