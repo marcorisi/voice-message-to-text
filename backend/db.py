@@ -39,7 +39,7 @@ class DB:
         Insert an audio record into the database.
 
         Args:
-            audio (dict): The audio record to insert.
+            audio (Audio): The audio record to insert.
 
         Returns:
             int: The ID of the inserted audio record.
