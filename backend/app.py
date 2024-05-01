@@ -1,8 +1,25 @@
+import logging
 from flask import Flask, request, jsonify
 from audio import Audio
 from db import DB
 
 app = Flask(__name__)
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def log_request(request, status_code, operation):
+    """
+    Logs the details of a request.
+
+    Parameters:
+    - request (werkzeug.local.LocalProxy): The request object to log.
+    - status_code (int): The status code of the response.
+    - operation (str): The operation performed.
+
+    Returns:
+    - None
+    """
+    logging.info(f"{request.method} {request.path} - Status Code: {status_code} - Operation: {operation}")
 
 @app.route('/')
 def index():
@@ -20,6 +37,7 @@ def transcribe():
     audio_record = db.get(audio_id)
     if audio_record:
         response = jsonify(audio_record)
+        log_request(request, 200, "Audio already transcribed, returning existing record")
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 200
     
@@ -29,5 +47,5 @@ def transcribe():
 
     response = jsonify(my_audio.to_dict())
     response.headers.add('Access-Control-Allow-Origin', '*')
+    log_request(request, 201, "New audio transcribed, returning new record")
     return response, 201
-    
