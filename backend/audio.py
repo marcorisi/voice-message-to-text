@@ -70,10 +70,15 @@ class Audio:
         """
         model = whisper.load_model(self.whisper_model)
         result = model.transcribe(self.audio_file)
+
+        self.text = result['text']
+        self.language = result['language']
+        self.length = self.get_audio_length(result)
+        
         return {
-            "text": result['text'],
-            "language": result['language'],
-            "length": self.get_audio_length(result)
+            "text": self.text,
+            "language": self.language,
+            "length": self.length
         }
     
     def to_dict(self):

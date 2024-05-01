@@ -61,6 +61,9 @@ class AudioTests(unittest.TestCase):
             }
             actual_result = self.audio.transcribe()
             self.assertEqual(actual_result, expected_result)
+            self.assertEqual(self.audio.text, expected_result["text"])
+            self.assertEqual(self.audio.language, expected_result["language"])
+            self.assertEqual(self.audio.length, expected_result["length"])
 
     def test_to_dict(self):
         audio_dict = self.audio.to_dict()
