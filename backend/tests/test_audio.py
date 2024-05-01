@@ -22,7 +22,8 @@ class AudioTests(unittest.TestCase):
         self.assertEqual(actual_file_name, expected_file_name)
 
     def test_get_audio_id(self):
-        expected_id = str(hash(self.audio_file))
+        file_name = "audio.wav"
+        expected_id = str(hash(file_name))
         actual_id = self.audio.get_id(self.audio_file)
         self.assertEqual(actual_id, expected_id)
         self.assertIsInstance(expected_id, str, "The ID is not a string")
@@ -60,3 +61,13 @@ class AudioTests(unittest.TestCase):
             }
             actual_result = self.audio.transcribe()
             self.assertEqual(actual_result, expected_result)
+
+    def test_to_dict(self):
+        audio_dict = self.audio.to_dict()
+        self.assertIsInstance(audio_dict, dict)
+        self.assertEqual(4, len(audio_dict.keys()))
+        self.assertIn("id", audio_dict)
+        self.assertIn("text", audio_dict)
+        self.assertIn("language", audio_dict)
+        self.assertIn("length", audio_dict)
+        
