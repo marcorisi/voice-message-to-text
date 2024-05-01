@@ -14,13 +14,21 @@ def transcribe():
     file_name = f"storage/{audio_file.filename}"
     audio_file.save(file_name)
 
-    my_audio = Audio(file_name)
-    result = my_audio.transcribe()
-
+    # Look if you have already transcribed this audio
     db = DB()
+    audio_id = Audio.get_id(file_name)
+    audio_record = db.get(audio_id)
+    if audio_record:
+        print('Audio already transcribed')
+        response = jsonify(audio_record)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 200
+    
+    my_audio = Audio(file_name)
+    my_audio.transcribe()
     db.insert_audio(my_audio)
 
-    response = jsonify(result)
+    response = jsonify(my_audio.to_dict())
     response.headers.add('Access-Control-Allow-Origin', '*')
-    return response, 200
+    return response, 201
     
