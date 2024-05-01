@@ -9,6 +9,18 @@ class AudioTests(unittest.TestCase):
         self.whisper_model = "base"
         self.audio = Audio(self.audio_file, self.whisper_model)
 
+    def test_get_file_name_path_with_folders(self):
+        file_path = "/path/to/audio.wav"
+        expected_file_name = "audio.wav"
+        actual_file_name = self.audio.get_file_name(file_path)
+        self.assertEqual(actual_file_name, expected_file_name)
+
+    def test_get_file_name_path_without_folders(self):
+        file_path = "audio.wav"
+        expected_file_name = "audio.wav"
+        actual_file_name = self.audio.get_file_name(file_path)
+        self.assertEqual(actual_file_name, expected_file_name)
+
     def test_get_audio_length(self):
         whisper_transcribe_result = {
             "segments": [

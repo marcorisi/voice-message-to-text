@@ -5,6 +5,19 @@ class Audio:
     Represents an audio file and provides methods for transcription.
     """
 
+    @staticmethod
+    def get_file_name(file_path):
+        """
+        Gets the name of the file from the file path.
+
+        Parameters:
+        - file_path (str): The path to the file.
+
+        Returns:
+        - str: The name of the file.
+        """
+        return file_path.split('/')[-1]
+
     def __init__(self, audio_file, whisper_model='base'):
         """
         Initializes an Audio object.
