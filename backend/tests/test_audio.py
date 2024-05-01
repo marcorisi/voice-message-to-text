@@ -21,6 +21,12 @@ class AudioTests(unittest.TestCase):
         actual_file_name = self.audio.get_file_name(file_path)
         self.assertEqual(actual_file_name, expected_file_name)
 
+    def test_get_audio_id(self):
+        expected_id = str(hash(self.audio_file))
+        actual_id = self.audio.get_id(self.audio_file)
+        self.assertEqual(actual_id, expected_id)
+        self.assertIsInstance(expected_id, str, "The ID is not a string")
+
     def test_get_audio_length(self):
         whisper_transcribe_result = {
             "segments": [
