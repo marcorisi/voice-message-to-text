@@ -19,7 +19,6 @@ def transcribe():
     audio_id = Audio.get_id(file_name)
     audio_record = db.get(audio_id)
     if audio_record:
-        print('Audio already transcribed')
         response = jsonify(audio_record)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 200
