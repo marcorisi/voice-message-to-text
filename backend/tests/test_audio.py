@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
+import hashlib
 
 from audio import Audio
 
@@ -23,7 +24,7 @@ class AudioTests(unittest.TestCase):
 
     def test_get_audio_id(self):
         file_name = "audio.wav"
-        expected_id = str(hash(file_name))
+        expected_id = hashlib.md5(file_name.encode()).hexdigest()
         actual_id = self.audio.get_id(self.audio_file)
         self.assertEqual(actual_id, expected_id)
         self.assertIsInstance(expected_id, str, "The ID is not a string")
