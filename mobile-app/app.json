@@ -17,10 +17,18 @@
     "plugins": [
       [
         "expo-share-intent",
-        { 
-          "androidIntentFilters": [ 
-            "audio/*" 
-          ] 
+        {
+          "androidIntentFilters": [
+            "audio/*"
+          ]
+        }
+      ], 
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
       ]
     ],
