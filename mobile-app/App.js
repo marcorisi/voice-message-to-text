@@ -1,7 +1,11 @@
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 
 import { useShareIntent, ShareIntentFile } from "expo-share-intent";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+
+import { TextMessage } from './components/text-message';
+import { TextMessageFooter } from './components/text-message-footer';
+import { BackendUrlInput } from "./components/backend-url-input";
 
 export default function App() {
   const { hasShareIntent, shareIntent, resetShareIntent, error } =
@@ -10,12 +14,64 @@ export default function App() {
       resetOnBackground: true,
     });
 
+  const [transcribedText, setTranscribedText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [url, setUrl] = useState("http://192.168.1.62:5000");
+
+  const uploadFileFromMobile = () => {
+    uploadFile(shareIntent.files[0]);
+  }
+
+  // https://stackoverflow.com/a/64397804
+  const sendXmlHttpRequest = (data) => {
+    const xhr = new XMLHttpRequest();
+    const fullUrl = url + "/transcribe";
+  
+    return new Promise((resolve, reject) => {
+      xhr.onreadystatechange = e => {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+  
+        if (xhr.status === 200) {
+          resolve(JSON.parse(xhr.responseText));
+        } else {
+          reject("Request Failed");
+        }
+      };
+      xhr.open("POST", fullUrl);
+      xhr.setRequestHeader("Content-Type", "multipart/form-data");
+      xhr.send(data);
+    });
+  }
+  
+
+  const uploadFile = async (file) => {
+    setIsLoading(true);
+
+    const formData = new FormData();
+    formData.append("audio", {
+      uri: file.uri,
+      name: file.fileName,
+      type: file.type
+    });
+    
+    const response = sendXmlHttpRequest(formData)
+      .then((data) => {
+        console.log(data)
+        setTranscribedText(data.text)
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error)
+        const errorMessage = error.message || "Error transcribing file";
+        setTranscribedText(errorMessage)
+        setIsLoading(false);
+      });
+  }
+
   return (
     <View style={styles.container}>
-      <Image
-        source={require("./assets/icon.png")}
-        style={[styles.logo, styles.gap]}
-      />
       <Text style={[styles.gap, styles.bold]}>
         {hasShareIntent ? "SHARE INTENT FOUND !" : "NO SHARE INTENT DETECTED"}
       </Text>
@@ -40,7 +96,16 @@ export default function App() {
       {!!shareIntent && (
         <Button onPress={() => resetShareIntent()} title="Reset" />
       )}
+      {!!shareIntent && (
+        <Button onPress={() => uploadFileFromMobile()} title="Transcribe" />
+      )}
       <Text style={[styles.error]}>{error}</Text>
+
+      <BackendUrlInput url={url} onChangeText={setUrl} />
+      <TextMessage message={transcribedText} />
+      <TextMessageFooter messageId="random-number-000" messageLength="00:24" />
+
+
     </View>
   );
 }
