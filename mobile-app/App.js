@@ -87,7 +87,7 @@ export default function App() {
       </Text>
 
       {shareIntent?.files?.map((file) => (
-          <FileMeta file={file} />
+          <FileMeta key={file.path} file={file} />
       ))}
 
       <BackendUrlInput url={url} onChangeText={setUrl} />
