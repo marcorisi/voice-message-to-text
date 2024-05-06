@@ -6,6 +6,7 @@ import { Fragment, useState } from "react";
 import { TextMessage } from './components/text-message';
 import { TextMessageFooter } from './components/text-message-footer';
 import { BackendUrlInput } from "./components/backend-url-input";
+import { FileMeta } from "./components/file-meta";
 
 export default function App() {
   const { hasShareIntent, shareIntent, resetShareIntent, error } =
@@ -74,58 +75,29 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={[styles.gap, styles.bold]}>
-        {hasShareIntent ? "SHARE INTENT FOUND !" : "NO SHARE INTENT DETECTED"}
+        {hasShareIntent ? "A new audio has been shared!" : "No audio shared..."}
       </Text>
 
-      {/* TEXT and URL */}
-      {!!shareIntent.text && <Text style={styles.gap}>{shareIntent.text}</Text>}
-      {!!shareIntent.meta?.title && (
-        <Text style={styles.gap}>{JSON.stringify(shareIntent.meta)}</Text>
-      )}
-
-      {/* FILES */}
       {shareIntent?.files?.map((file) => (
-        <Fragment key={file.path}>
-          {file.mimeType.startsWith("image/") && (
-            <Image source={{ uri: file.path }} style={[styles.image]} />
-          )}
           <FileMeta file={file} />
-        </Fragment>
       ))}
 
-      {/* FOOTER */}
+      <BackendUrlInput url={url} onChangeText={setUrl} />
+
       {!!shareIntent && (
-        <Button onPress={() => resetShareIntent()} title="Reset" />
+        <Button onPress={() => resetShareIntent()} disabled={!hasShareIntent} title="Reset" />
       )}
       {!!shareIntent && (
-        <Button onPress={() => uploadFileFromMobile()} title="Transcribe" />
+        <Button onPress={() => uploadFileFromMobile()} disabled={!hasShareIntent} title="Transcribe" />
       )}
       <Text style={[styles.error]}>{error}</Text>
 
-      <BackendUrlInput url={url} onChangeText={setUrl} />
       <TextMessage message={transcription.text} />
       <TextMessageFooter 
         messageId={transcription.id} 
         messageLength={transcription.length} 
         responseStatusCode={transcription.statusCode} />
 
-    </View>
-  );
-}
-
-function FileMeta({ file }) {
-  return (
-    <View style={[styles.gap, styles.meta]}>
-      <Text style={styles.bold}>{file.fileName}</Text>
-      <Text>
-        {file.mimeType} ({Math.round((file.size || 0) / 1024)}
-        ko)
-      </Text>
-      {file.width && (
-        <Text>
-          {file.width} x {file.height}
-        </Text>
-      )}
     </View>
   );
 }
