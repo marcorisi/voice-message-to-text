@@ -16,7 +16,7 @@ export default function App() {
 
   const [transcribedText, setTranscribedText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState("http://192.168.1.62:5000");
+  const [url, setUrl] = useState("http://192.168.1.59:5000");
 
   const uploadFileFromMobile = () => {
     uploadFile(shareIntent.files[0]);
@@ -33,10 +33,10 @@ export default function App() {
           return;
         }
   
-        if (xhr.status === 200) {
+        if (xhr.status === 200 || xhr.status === 201) {
           resolve(JSON.parse(xhr.responseText));
         } else {
-          reject("Request Failed");
+          reject("Request Failed" + xhr.responseText);
         }
       };
       xhr.open("POST", fullUrl);
@@ -50,11 +50,12 @@ export default function App() {
     setIsLoading(true);
 
     const formData = new FormData();
-    formData.append("audio", {
-      uri: file.uri,
+    const audioFile = {
+      uri: file.path,
       name: file.fileName,
-      type: file.type
-    });
+      type: file.mimeType,
+    }
+    formData.append("audio", audioFile);
     
     const response = sendXmlHttpRequest(formData)
       .then((data) => {
