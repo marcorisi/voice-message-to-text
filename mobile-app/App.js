@@ -14,7 +14,7 @@ export default function App() {
       resetOnBackground: true,
     });
 
-  const [transcribedText, setTranscribedText] = useState("");
+  const [transcription, setTranscription] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [url, setUrl] = useState("http://192.168.1.59:5000");
 
@@ -34,9 +34,11 @@ export default function App() {
         }
   
         if (xhr.status === 200 || xhr.status === 201) {
-          resolve(JSON.parse(xhr.responseText));
+          let transcription = JSON.parse(xhr.responseText);
+          transcription.statusCode = xhr.status;
+          resolve(transcription);
         } else {
-          reject("Request Failed" + xhr.responseText);
+          reject("Request Failed: " + xhr.responseText);
         }
       };
       xhr.open("POST", fullUrl);
@@ -60,12 +62,11 @@ export default function App() {
     const response = sendXmlHttpRequest(formData)
       .then((data) => {
         console.log(data)
-        setTranscribedText(data.text)
+        setTranscription(data)
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error)
-        setTranscribedText(error)
+        alert(error);
         setIsLoading(false);
       });
   }
@@ -102,9 +103,11 @@ export default function App() {
       <Text style={[styles.error]}>{error}</Text>
 
       <BackendUrlInput url={url} onChangeText={setUrl} />
-      <TextMessage message={transcribedText} />
-      <TextMessageFooter messageId="random-number-000" messageLength="00:24" />
-
+      <TextMessage message={transcription.text} />
+      <TextMessageFooter 
+        messageId={transcription.id} 
+        messageLength={transcription.length} 
+        responseStatusCode={transcription.statusCode} />
 
     </View>
   );
