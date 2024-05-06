@@ -1,4 +1,4 @@
-import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 import { useShareIntent, ShareIntentFile } from "expo-share-intent";
 import { Fragment, useState } from "react";
@@ -74,7 +74,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.gap, styles.bold]}>
+      <Text style={[styles.intentInfo, styles.bold]}>
         {hasShareIntent ? "A new audio has been shared!" : "No audio shared..."}
       </Text>
 
@@ -84,12 +84,15 @@ export default function App() {
 
       <BackendUrlInput url={url} onChangeText={setUrl} />
 
-      {!!shareIntent && (
-        <Button onPress={() => resetShareIntent()} disabled={!hasShareIntent} title="Reset" />
-      )}
-      {!!shareIntent && (
-        <Button onPress={() => uploadFileFromMobile()} disabled={!hasShareIntent} title="Transcribe" />
-      )}
+      <View style={styles.buttonWrapper}>
+        {!!shareIntent && (
+          <Button style={styles.button} onPress={() => resetShareIntent()} disabled={!hasShareIntent} title="Reset" />
+        )}
+        {!!shareIntent && (
+          <Button style={styles.button} onPress={() => uploadFileFromMobile()} disabled={!hasShareIntent} title="Transcribe" />
+        )}
+      </View>
+
       <Text style={[styles.error]}>{error}</Text>
 
       <TextMessage message={transcription.text} />
@@ -105,30 +108,25 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
-    justifyContent: "center",
+    margin: 8,
+    marginTop: 80,
   },
-  logo: {
-    width: 75,
-    height: 75,
-    resizeMode: "contain",
+  intentInfo: {
+    margin: 16,
   },
-  image: {
-    width: 300,
-    height: 200,
-    resizeMode: "contain",
-    // backgroundColor: "lightgray",
-  },
-  gap: {
-    marginBottom: 20,
+  buttonWrapper: {
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    width: "100%",
+    padding: 16,
+    gap: 16,
   },
   bold: {
     fontWeight: "bold",
-  },
-  meta: {
-    alignItems: "center",
-    justifyContent: "center",
   },
   error: {
     color: "red",
