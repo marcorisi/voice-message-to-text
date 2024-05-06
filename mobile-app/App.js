@@ -2,6 +2,7 @@ import { Button, StyleSheet, Text, View } from "react-native";
 
 import { useShareIntent, ShareIntentFile } from "expo-share-intent";
 import { useState } from "react";
+import * as Progress from "react-native-progress";
 
 import { TextMessage } from './components/text-message';
 import { TextMessageFooter } from './components/text-message-footer';
@@ -93,7 +94,11 @@ export default function App() {
         )}
       </View>
 
-      <Text style={[styles.error]}>{error}</Text>
+      { isLoading && 
+        <Progress.Bar height={8} borderRadius={0} indeterminate={true} color="#666" animating={!isLoading} useNativeDriver={true}/>
+      }
+
+      { !!error && <Text style={[styles.error]}>{error}</Text> }
 
       <TextMessage message={transcription.text} />
       <TextMessageFooter 

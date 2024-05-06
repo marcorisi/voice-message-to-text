@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'black',
         width: '100%',
-        padding: 16,
+        paddingVertical: 8,
+        paddingHorizontal: 16,
         backgroundColor: '#f0f0f0',
     },
 });
