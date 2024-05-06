@@ -16,9 +16,11 @@ export default function App() {
       resetOnBackground: true,
     });
 
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL + ":" + process.env.EXPO_PUBLIC_API_PORT;
+
   const [transcription, setTranscription] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState("http://192.168.1.59:5000");
+  const [url, setUrl] = useState(apiUrl);
 
   const uploadFileFromMobile = () => {
     uploadFile(shareIntent.files[0]);
