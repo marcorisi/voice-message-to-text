@@ -73,6 +73,11 @@ export default function App() {
       });
   }
 
+  const reset = () => {
+    setTranscription({});
+    resetShareIntent();
+  }
+
   return (
     <View style={styles.container}>
       <Text style={[styles.intentInfo, styles.bold]}>
@@ -87,7 +92,7 @@ export default function App() {
 
       <View style={styles.buttonWrapper}>
         {!!shareIntent && (
-          <Button style={styles.button} onPress={() => resetShareIntent()} disabled={!hasShareIntent} title="Reset" />
+          <Button style={styles.button} onPress={() => reset()} disabled={!hasShareIntent} title="Reset" />
         )}
         {!!shareIntent && (
           <Button style={styles.button} onPress={() => uploadFileFromMobile()} disabled={!hasShareIntent} title="Transcribe" />
