@@ -1,7 +1,7 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
 import { useShareIntent, ShareIntentFile } from "expo-share-intent";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 import { TextMessage } from './components/text-message';
 import { TextMessageFooter } from './components/text-message-footer';
