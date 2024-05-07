@@ -1,6 +1,6 @@
 # Voice Message to Text
 
-This repository contains a project that converts Whatsapp voice messages into text using a React Native frontend and a Flask backend.
+This repository contains a project that converts WhatsApp voice messages into text using a React Native frontend and a Flask backend.
 
 <img src="./assets/video.gif" width="270" />
 
@@ -15,8 +15,8 @@ The frontend is a React Native app built using [Expo](https://expo.dev/) and the
 ### Requirements
 1. Node.js, Git and Watchman (see [Expo installation](https://docs.expo.dev/get-started/installation/))
 2. Android Studio Emulator (see [Expo installation](https://docs.expo.dev/workflow/android-studio-emulator/))
-3. Java ([official instruction](https://www.java.com/en/download/help/index_installing.html)) and JDK ([download link](https://www.oracle.com/java/technologies/downloads/))
-4. *(optional)* An Expo account, if you want to build with EAS ([link](https://expo.dev/signup))
+3. Java ([official instructions](https://www.java.com/en/download/help/index_installing.html)) and JDK ([download link](https://www.oracle.com/java/technologies/downloads/))
+4. *(optional)* An Expo account if you want to build with EAS ([link](https://expo.dev/signup))
 
 ### Run the app in development mode
 ```
@@ -55,7 +55,7 @@ $ pip install -r requirements.txt
 $ flask --app app run --host=0.0.0.0
 ```
 
-### Run the test
+### Run the tests
 ```
 $ cd backend/
 $ python -m unittest -v
