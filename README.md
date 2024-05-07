@@ -2,6 +2,8 @@
 
 This repository contains a project that converts Whatsapp voice messages into text using a React Native frontend and a Flask backend.
 
+<img src="./assets/video.gif" width="270" />
+
 ## Frontend
 
 The frontend is a React Native app built using [Expo](https://expo.dev/) and the [Expo Share Intent plugin](https://github.com/achorein/expo-share-intent).  
