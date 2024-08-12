@@ -47,7 +47,6 @@ def print_command_menu():
 
 def main():
     db = DB()
-    print_command_menu()
     
     while True:
         print_command_menu()
