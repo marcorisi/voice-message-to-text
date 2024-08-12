@@ -36,6 +36,36 @@ class DBTests(unittest.TestCase):
         self.assertEqual(audio_record["text"], "Hello, world!")
         self.assertEqual(audio_record["language"], "en")
         self.assertEqual(audio_record["length"], 10)
+
+    def test_get_all(self):
+        audio_records = [
+            {"text": "Hello, world!", "language": "en", "length": 10},
+            {"text": "Bonjour le monde!", "language": "fr", "length": 15},
+            {"text": "Hola, mundo!", "language": "es", "length": 12}
+        ]
+        for audio_record in audio_records:
+            self.db.db.insert(audio_record)
+
+        expected_result = audio_records
+        actual_result = self.db.get_all()
+        self.assertEqual(actual_result, expected_result)
+        self.assertEqual(3, len(actual_result))
+    
+    def test_truncate(self):
+        audio_records = [
+            {"text": "Hello, world!", "language": "en", "length": 10},
+            {"text": "Bonjour le monde!", "language": "fr", "length": 15},
+            {"text": "Hola, mundo!", "language": "es", "length": 12}
+        ]
+        for audio_record in audio_records:
+            self.db.db.insert(audio_record)
+
+        all_items = self.db.get_all()
+        self.assertEqual(3, len(all_items))
+        self.db.truncate()
+        all_items = self.db.get_all()
+        self.assertEqual(0, len(all_items))
+        self.assertEqual([], all_items)
     
     def tearDown(self):
         self.db.db.close()
