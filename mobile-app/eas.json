@@ -5,10 +5,18 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://192.168.1.59",
+        "EXPO_PUBLIC_API_PORT": "5000"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://192.168.1.59",
+        "EXPO_PUBLIC_API_PORT": "5000"
+      }
     },
     "production": {}
   },
