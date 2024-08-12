@@ -5,7 +5,7 @@ import os
 from db import DB
 
 
-def show_numbers_of_audio_stored_in_db(db):
+def show_numbers_of_audio_stored_in_db(db: DB):
     os.system('clear')
     all_records = db.get_all()
     print(f"Number of audio stored in the DB: {len(all_records)}\n")
