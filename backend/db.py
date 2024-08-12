@@ -54,3 +54,9 @@ class DB:
             list: A list of all audio records in the database.
         """
         return self.db.all()
+    
+    def truncate(self):
+        """
+        Remove all audio records from the database.
+        """
+        self.db.truncate()
