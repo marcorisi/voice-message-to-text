@@ -14,7 +14,13 @@ def show_numbers_of_audio_stored_in_db(db: DB):
 def show_all_items_stored_in_db(db: DB):
     os.system('clear')
     all_records = db.get_all()
-    print("Printing all the items stored in the DB.")
+    if not all_records:
+        print("DB is empty.\n")
+        print("Press Enter to continue...")
+        input()
+        return
+    
+    print("Printing all the items stored in the DB.\n")
     print("Press Enter to continue or x to exit.\n")
     for record in all_records:
         print(record)
