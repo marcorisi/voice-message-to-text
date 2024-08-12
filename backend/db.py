@@ -45,3 +45,12 @@ class DB:
             int: The ID of the inserted audio record.
         """
         return self.db.insert(audio.to_dict())
+    
+    def get_all(self):
+        """
+        Retrieve all audio records from the database.
+
+        Returns:
+            list: A list of all audio records in the database.
+        """
+        return self.db.all()
