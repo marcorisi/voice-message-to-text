@@ -49,3 +49,6 @@ def transcribe():
     response.headers.add('Access-Control-Allow-Origin', '*')
     log_request(request, 201, "New audio transcribed, returning new record")
     return response, 201
+
+if __name__ == '__main__':
+    app.run(debug=True,host='0.0.0.0')
