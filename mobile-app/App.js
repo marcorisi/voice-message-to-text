@@ -8,6 +8,7 @@ import { TextMessage } from './components/text-message';
 import { TextMessageFooter } from './components/text-message-footer';
 import { BackendUrlInput } from "./components/backend-url-input";
 import { FileMeta } from "./components/file-meta";
+import { AudioPlayer } from "./components/audio-player";
 
 export default function App() {
   const { hasShareIntent, shareIntent, resetShareIntent, error } =
@@ -90,7 +91,10 @@ export default function App() {
       </Text>
 
       {shareIntent?.files?.map((file) => (
-          <FileMeta key={file.path} file={file} />
+          <>
+            <FileMeta key={file.path} file={file} />
+            <AudioPlayer key={file.fileName} audioPath={file.path}/>
+          </>
       ))}
 
       <BackendUrlInput url={url} onChangeText={setUrl} />
