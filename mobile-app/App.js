@@ -16,7 +16,10 @@ export default function App() {
       resetOnBackground: true,
     });
 
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL + ":" + process.env.EXPO_PUBLIC_API_PORT;
+  const apiUrl = process.env.EXPO_PUBLIC_API_URL
+  if (process.env.EXPO_PUBLIC_API_PORT) {
+    apiUrl = apiUrl + ":" + process.env.EXPO_PUBLIC_API_PORT
+  }
 
   const [transcription, setTranscription] = useState({});
   const [isLoading, setIsLoading] = useState(false);
