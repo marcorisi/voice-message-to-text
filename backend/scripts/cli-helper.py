@@ -1,5 +1,5 @@
 # How to run this script: 
-# $ python3 -m scripts.cli-helper
+# $ (venv/bin/)python3 -m scripts.cli-helper
 
 import os
 from db import DB
