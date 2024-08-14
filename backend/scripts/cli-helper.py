@@ -37,12 +37,23 @@ def truncate_db(db: DB):
     db.truncate()
     input("DB cleared. Press Enter to continue...")
 
+def clean_up_storage_folder():
+    os.system('clear')
+    print("Are you sure you want to delete all the files in the storage folder? (y/N)")
+    answer = input()
+    if answer.lower() != 'y':
+        return
+    # Remove all the files in the storage folder, but keep the .gitkeep file
+    os.system("find ./storage ! -name '.gitkeep' -type f -exec rm -f {} +")
+    input("Storage folder cleaned up. Press Enter to continue...")
+
 def print_command_menu():
     os.system('clear')
     print("How can I help you?")
     print("(1) Show numbers of audio stored in the DB.")
     print("(2) Show all the items stored in the DB.")
     print("(3) Truncate the DB.")
+    print("(4) Clean up the storage folder.")
     print("(*) Exit")
 
 def main():
@@ -58,6 +69,8 @@ def main():
                 show_all_items_stored_in_db(db)
             case '3':
                 truncate_db(db)
+            case '4':
+                clean_up_storage_folder()
             case _:
                 break
         
