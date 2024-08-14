@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import { useEffect, useState } from 'react';
 import { Audio } from 'expo-av';
 
