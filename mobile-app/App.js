@@ -16,7 +16,7 @@ export default function App() {
       resetOnBackground: true,
     });
 
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL
+  let apiUrl = process.env.EXPO_PUBLIC_API_URL
   if (process.env.EXPO_PUBLIC_API_PORT) {
     apiUrl = apiUrl + ":" + process.env.EXPO_PUBLIC_API_PORT
   }
