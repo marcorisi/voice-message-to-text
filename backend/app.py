@@ -21,9 +21,9 @@ def log_request(request, status_code, operation):
     """
     logging.info(f"{request.method} {request.path} - Status Code: {status_code} - Operation: {operation}")
 
-@app.route('/')
+@app.route('/ping', methods=['GET'])
 def index():
-    return 'Hello, World!'
+    return 'pong'
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
