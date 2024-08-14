@@ -8,26 +8,20 @@ export function AudioPlayer ({ audioPath }) {
     const [isPlaying, setIsPlaying] = useState(false);
 
     async function playSound() {
-        console.log('Loading Sound');
         const { sound } = await Audio.Sound.createAsync( { uri: audioPath }, { shouldPlay: true } );
         setSound(sound);
-
-        console.log('Playing Sound');
         await sound.playAsync();
         setIsPlaying(true);
     }
 
     async function stopSound() {
-        console.log('Stopping Sound');
         await sound.stopAsync();
         setIsPlaying(false);
     }
 
     useEffect(() => {
         return sound
-          ? () => {
-              console.log('Unloading Sound');
-              sound.unloadAsync(); }
+          ? () => sound.unloadAsync()
           : undefined;
     }, [sound]);
 
