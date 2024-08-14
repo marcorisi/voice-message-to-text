@@ -25,7 +25,7 @@ class DBTests(unittest.TestCase):
 
     def test_insert_audio(self):
         audio = MagicMock()
-        audio.to_dict.return_value = {"text": "Hello, world!", "language": "en", "length": 10}
+        audio.to_dict.return_value = {"text": "Hello, world!", "language": "en", "length": 10, "transcribed_at": "2024-01-01 12:00:00"}
 
         expected_id = 1
         actual_id = self.db.insert_audio(audio)
@@ -36,12 +36,13 @@ class DBTests(unittest.TestCase):
         self.assertEqual(audio_record["text"], "Hello, world!")
         self.assertEqual(audio_record["language"], "en")
         self.assertEqual(audio_record["length"], 10)
+        self.assertEqual(audio_record["transcribed_at"], "2024-01-01 12:00:00")
 
     def test_get_all(self):
         audio_records = [
-            {"text": "Hello, world!", "language": "en", "length": 10},
-            {"text": "Bonjour le monde!", "language": "fr", "length": 15},
-            {"text": "Hola, mundo!", "language": "es", "length": 12}
+            {"text": "Hello, world!", "language": "en", "length": 10, "transcribed_at": "2024-01-01 12:00:00"},
+            {"text": "Bonjour le monde!", "language": "fr", "length": 15, "transcribed_at": "2024-01-01 12:00:00"},
+            {"text": "Hola, mundo!", "language": "es", "length": 12, "transcribed_at": "2024-01-01 12:00:00"}
         ]
         for audio_record in audio_records:
             self.db.db.insert(audio_record)
@@ -53,9 +54,9 @@ class DBTests(unittest.TestCase):
     
     def test_truncate(self):
         audio_records = [
-            {"text": "Hello, world!", "language": "en", "length": 10},
-            {"text": "Bonjour le monde!", "language": "fr", "length": 15},
-            {"text": "Hola, mundo!", "language": "es", "length": 12}
+            {"text": "Hello, world!", "language": "en", "length": 10, "transcribed_at": "2024-01-01 12:00:00"},
+            {"text": "Bonjour le monde!", "language": "fr", "length": 15, "transcribed_at": "2024-01-01 12:00:00"},
+            {"text": "Hola, mundo!", "language": "es", "length": 12, "transcribed_at": "2024-01-01 12:00:00"}
         ]
         for audio_record in audio_records:
             self.db.db.insert(audio_record)

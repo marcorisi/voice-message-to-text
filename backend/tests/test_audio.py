@@ -60,18 +60,21 @@ class AudioTests(unittest.TestCase):
                 "language": "en",
                 "length": 10
             }
+            self.assertIsNone(self.audio.transcribed_at)
             actual_result = self.audio.transcribe()
             self.assertEqual(actual_result, expected_result)
             self.assertEqual(self.audio.text, expected_result["text"])
             self.assertEqual(self.audio.language, expected_result["language"])
             self.assertEqual(self.audio.length, expected_result["length"])
+            self.assertIsNotNone(self.audio.transcribed_at)
 
     def test_to_dict(self):
         audio_dict = self.audio.to_dict()
         self.assertIsInstance(audio_dict, dict)
-        self.assertEqual(4, len(audio_dict.keys()))
+        self.assertEqual(5, len(audio_dict.keys()))
         self.assertIn("id", audio_dict)
         self.assertIn("text", audio_dict)
         self.assertIn("language", audio_dict)
         self.assertIn("length", audio_dict)
+        self.assertIn("transcribed_at", audio_dict)
         

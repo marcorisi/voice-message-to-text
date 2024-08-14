@@ -1,5 +1,6 @@
 import whisper
 import hashlib
+from datetime import datetime
 
 class Audio:
     """
@@ -51,6 +52,7 @@ class Audio:
         self.text = None
         self.language = None
         self.length = None
+        self.transcribed_at = None
 
     def get_audio_length(self, whisper_transcribe_result):
         """
@@ -78,6 +80,7 @@ class Audio:
         self.text = result['text']
         self.language = result['language']
         self.length = self.get_audio_length(result)
+        self.transcribed_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         return {
             "text": self.text,
@@ -93,6 +96,6 @@ class Audio:
         Returns:
         - dict: A dictionary representation of the Audio object.
         """
-        PROPERTY_TO_KEEP = ["id", "text", "language", "length"]
+        PROPERTY_TO_KEEP = ["id", "text", "language", "length", "transcribed_at"]
         dict = self.__dict__
         return {key: dict[key] for key in PROPERTY_TO_KEEP}
