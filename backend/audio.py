@@ -75,7 +75,7 @@ class Audio:
         - dict: A dictionary containing the transcribed text, language, and length of the audio.
         """
         model = whisper.load_model(self.whisper_model)
-        result = model.transcribe(self.audio_file)
+        result = model.transcribe(self.audio_file, language='it', fp16=False)
 
         self.text = result['text']
         self.language = result['language']
