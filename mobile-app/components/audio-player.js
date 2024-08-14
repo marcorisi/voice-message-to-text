@@ -26,7 +26,7 @@ export function AudioPlayer ({ audioPath }) {
     }, [sound]);
 
     return (
-        <View style={[styles.gap, styles.meta]}>
+        <View style={[styles.gap]}>
             { !isPlaying && <Button title="Play" onPress={playSound} color="grey" /> }
             { isPlaying && <Button title="Stop" onPress={stopSound} color="grey" /> }
         </View>
@@ -39,7 +39,4 @@ const styles = StyleSheet.create({
       width: '100%',
       paddingHorizontal: 16,
     },
-    meta: {
-      alignItems: "left",
-    }
 });
