@@ -1,4 +1,5 @@
 from tinydb import TinyDB, Query
+from models.api_key import ApiKey
 
 
 class DB:
@@ -14,6 +15,7 @@ class DB:
     """
 
     AUDIO_TABLE = 'Audio'
+    API_KEY_TABLE = 'ApiKey'
 
     def __init__(self, db_name='db.json'):
         """
@@ -57,6 +59,21 @@ class DB:
             list: A list of all audio records in the database.
         """
         return self.db.table(self.AUDIO_TABLE).all()
+    
+    def generate_key_for_user(self, user):
+        """
+        Generate an API key for the given user and store it in the database.
+
+        Args:
+            user (str): The user for whom the API key is generated.
+
+        Returns:
+            str: The generated API key.
+        """
+        api_key = ApiKey.generate(user)
+        api_key_table = self.db.table(self.API_KEY_TABLE)
+        api_key_table.insert(api_key.to_dict())
+        return api_key
     
     def truncate(self):
         """

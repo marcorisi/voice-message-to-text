@@ -9,6 +9,7 @@ class DBTests(unittest.TestCase):
         self.db_name = "test_db.json"
         self.db = DB(self.db_name)
         self.audio_table = self.db.db.table(DB.AUDIO_TABLE)
+        self.api_key_table = self.db.db.table(DB.API_KEY_TABLE)
 
     def test_get_existing_audio(self):
         audio_id = 123
@@ -52,6 +53,17 @@ class DBTests(unittest.TestCase):
         actual_result = self.db.get_all_audio()
         self.assertEqual(actual_result, expected_result)
         self.assertEqual(3, len(actual_result))
+
+    def test_generate_key_for_user(self):
+        user = "test_user"
+        api_key_for_test_user = self.api_key_table.get(Query().user == user)
+        self.assertIsNone(api_key_for_test_user, 'API key for test_user should not exist yet')
+
+        api_key = self.db.generate_key_for_user(user)
+        api_key_for_test_user = self.api_key_table.get(Query().user == user)
+        self.assertIsNotNone(api_key_for_test_user, 'API key for test_user should exist now')
+        self.assertEqual(api_key.key, api_key_for_test_user["key"])
+        self.assertEqual(api_key.user, api_key_for_test_user["user"])
     
     def test_truncate(self):
         audio_records = [
