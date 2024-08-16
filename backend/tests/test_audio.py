@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock
 import hashlib
 
-from audio import Audio
+from models.audio import Audio
 
 class AudioTests(unittest.TestCase):
     def setUp(self):
@@ -54,7 +54,7 @@ class AudioTests(unittest.TestCase):
         whisper_module_mock = MagicMock()
         whisper_module_mock.load_model = whisper_load_model_mock
 
-        with unittest.mock.patch("audio.whisper", whisper_module_mock):
+        with unittest.mock.patch("models.audio.whisper", whisper_module_mock):
             expected_result = {
                 "text": "Hello, world!",
                 "language": "en",

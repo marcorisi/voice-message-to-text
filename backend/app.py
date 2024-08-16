@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, request, jsonify
-from audio import Audio
+from models.audio import Audio
 from db import DB
 
 app = Flask(__name__)
