@@ -92,10 +92,7 @@ export default function App() {
       </Text>
 
       {shareIntent?.files?.map((file) => (
-          <>
-            <FileMeta key={file.path} file={file} />
-            <AudioPlayer key={file.fileName} audioPath={file.path}/>
-          </>
+        <AudioPlayer key={file.fileName} file={file}/>
       ))}
 
       <BackendUrlInput url={url} onChangeText={setUrl} />
