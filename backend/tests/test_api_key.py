@@ -9,6 +9,12 @@ class ApiKeyTests(unittest.TestCase):
         obj = ApiKey()
         self.assertIsNone(obj.key)
         self.assertIsNone(obj.user)
+    
+    def test_init_with_unpacked_values(self):
+        dict = {"key": "test_key", "user": "test_user"}
+        api_key = ApiKey(**dict)
+        self.assertEqual(api_key.key, dict["key"])
+        self.assertEqual(api_key.user, dict["user"])
 
     def test_generate(self):
         api_key = ApiKey.generate(self.user)

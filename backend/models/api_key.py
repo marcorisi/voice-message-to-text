@@ -18,12 +18,12 @@ class ApiKey:
         api_key.user = user
         return api_key
 
-    def __init__(self):
+    def __init__(self, key=None, user=None):
         """
         Initializes an Api Key object.
         """
-        self.key = None
-        self.user = None
+        self.key = key
+        self.user = user
     
     def to_dict(self):
         """
