@@ -15,7 +15,6 @@ class ApiKey:
         """
         api_key = cls()
         api_key.key = secrets.token_urlsafe(32)
-        print(api_key.key)
         api_key.user = user
         return api_key
 
