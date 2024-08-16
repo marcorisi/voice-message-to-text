@@ -31,7 +31,7 @@ class DB:
         """
         self.db.close()
 
-    def get(self, audio_id):
+    def get_audio(self, audio_id):
         """
         Retrieve an audio record from the database based on its ID.
 
@@ -42,7 +42,7 @@ class DB:
             dict: The audio record matching the given ID.
         """
         Audio = Query()
-        return self.db.get(Audio.id == audio_id)
+        return self.db.table(self.AUDIO_TABLE).get(Audio.id == audio_id)
 
     def insert_audio(self, audio):
         """

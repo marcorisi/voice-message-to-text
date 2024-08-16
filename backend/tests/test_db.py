@@ -14,15 +14,15 @@ class DBTests(unittest.TestCase):
     def test_get_existing_audio(self):
         audio_id = 123
         audio_record = {"id": audio_id, "text": "Hello, world!", "language": "en", "length": 10}
-        self.db.db.insert(audio_record)
+        self.audio_table.insert(audio_record)
 
         expected_result = audio_record
-        actual_result = self.db.get(audio_id)
+        actual_result = self.db.get_audio(audio_id)
         self.assertEqual(actual_result, expected_result)
 
     def test_get_nonexistent_audio(self):
         audio_id = 123
-        actual_result = self.db.get(audio_id)
+        actual_result = self.db.get_audio(audio_id)
         self.assertIsNone(actual_result)
 
     def test_insert_audio(self):

@@ -36,7 +36,7 @@ def transcribe():
     # Look if you have already transcribed this audio
     db = DB()
     audio_id = Audio.get_id(file_name)
-    audio_record = db.get(audio_id)
+    audio_record = db.get_audio(audio_id)
     if audio_record:
         response = jsonify(audio_record)
         log_request(request, 200, "Audio already transcribed, returning existing record")
