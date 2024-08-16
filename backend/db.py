@@ -13,6 +13,8 @@ class DB:
         insert_audio(audio): Insert an audio record into the database.
     """
 
+    AUDIO_TABLE = 'Audio'
+
     def __init__(self, db_name='db.json'):
         """
         Initialize the DB class.
@@ -36,7 +38,7 @@ class DB:
 
     def insert_audio(self, audio):
         """
-        Insert an audio record into the database.
+        Insert an audio record into the database table "Audio".
 
         Args:
             audio (Audio): The audio record to insert.
@@ -44,19 +46,20 @@ class DB:
         Returns:
             int: The ID of the inserted audio record.
         """
-        return self.db.insert(audio.to_dict())
+        audio_table = self.db.table(self.AUDIO_TABLE)
+        return audio_table.insert(audio.to_dict())
     
-    def get_all(self):
+    def get_all_audio(self):
         """
         Retrieve all audio records from the database.
 
         Returns:
             list: A list of all audio records in the database.
         """
-        return self.db.all()
+        return self.db.table(self.AUDIO_TABLE).all()
     
     def truncate(self):
         """
         Remove all audio records from the database.
         """
-        self.db.truncate()
+        self.db.drop_table(self.AUDIO_TABLE)
