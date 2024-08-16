@@ -51,6 +51,7 @@ export default function App() {
       };
       xhr.open("POST", fullUrl);
       xhr.setRequestHeader("Content-Type", "multipart/form-data");
+      xhr.setRequestHeader("X-API-KEY", process.env.EXPO_PUBLIC_API_KEY);
       xhr.send(data);
     });
   }

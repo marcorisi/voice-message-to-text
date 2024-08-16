@@ -8,14 +8,16 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_URL": "http://192.168.1.59",
-        "EXPO_PUBLIC_API_PORT": "5000"
+        "EXPO_PUBLIC_API_PORT": "5000",
+        "EXPO_PUBLIC_API_KEY": "your-api-key"
       }
     },
     "preview": {
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_URL": "http://192.168.1.59",
-        "EXPO_PUBLIC_API_PORT": "5000"
+        "EXPO_PUBLIC_API_PORT": "5000",
+        "EXPO_PUBLIC_API_KEY": "your-api-key"
       }
     },
     "production": {}
