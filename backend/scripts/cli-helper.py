@@ -59,7 +59,7 @@ def print_command_menu():
     os.system('clear')
     print("How can I help you?")
     print("(1) Show numbers of audio stored in the DB.")
-    print("(2) Show all the items stored in the DB.")
+    print("(2) Show all the audio items stored in the DB.")
     print("(3) Truncate the DB.")
     print("(4) Clean up the storage folder.")
     print("(5) Generate a new api key for a user.")
