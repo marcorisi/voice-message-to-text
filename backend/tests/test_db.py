@@ -64,6 +64,16 @@ class DBTests(unittest.TestCase):
         self.assertIsNotNone(api_key_for_test_user, 'API key for test_user should exist now')
         self.assertEqual(api_key.key, api_key_for_test_user["key"])
         self.assertEqual(api_key.user, api_key_for_test_user["user"])
+
+    def test_get_all_users(self):
+        api_keys = self.db.get_all_api_keys()
+        self.assertEqual(0, len(api_keys), 'No API keys should exist yet')
+        users = ["user1", "user2", "user3"]
+        for user in users:
+            self.api_key_table.insert({"key": f"key-for-{user}", "user": user})
+        
+        api_keys = self.db.get_all_api_keys()
+        self.assertEqual(3, len(api_keys))
     
     def test_truncate(self):
         audio_records = [

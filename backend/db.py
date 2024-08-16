@@ -75,6 +75,15 @@ class DB:
         api_key_table.insert(api_key.to_dict())
         return api_key
     
+    def get_all_api_keys(self):
+        """
+        Retrieve all API keys from the database.
+
+        Returns:
+            list: A list of all API keys in the database.
+        """
+        return self.db.table(self.API_KEY_TABLE).all()
+    
     def truncate(self):
         """
         Remove all audio records from the database.

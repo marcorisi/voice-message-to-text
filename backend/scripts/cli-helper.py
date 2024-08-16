@@ -55,6 +55,17 @@ def generate_new_api_key_for_user(db: DB):
     print(f"API key generated for user '{user}': {api_key.key}")
     input("Press Enter to continue...")
 
+def show_enabled_users(db: DB):
+    os.system('clear')
+    api_keys = db.get_all_api_keys()
+    print("Printing all the enabled users.\n")
+    print("Press Enter to continue or x to exit.\n")
+    for api_key in api_keys:
+        print(api_key)
+        key = input()
+        if key == 'x':
+            break
+
 def print_command_menu():
     os.system('clear')
     print("How can I help you?")
@@ -63,6 +74,7 @@ def print_command_menu():
     print("(3) Truncate the DB.")
     print("(4) Clean up the storage folder.")
     print("(5) Generate a new api key for a user.")
+    print("(6) Show enabled users.")
     print("(*) Exit")
 
 def main():
@@ -82,6 +94,8 @@ def main():
                 clean_up_storage_folder()
             case '5':
                 generate_new_api_key_for_user(db)
+            case '6':
+                show_enabled_users(db)
             case _:
                 break
         
