@@ -25,6 +25,12 @@ class DB:
         """
         self.db = TinyDB(db_name)
 
+    def __del__(self):
+        """
+        Close the database connection when the object is deleted.
+        """
+        self.db.close()
+
     def get(self, audio_id):
         """
         Retrieve an audio record from the database based on its ID.
