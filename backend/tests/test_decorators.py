@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from flask import Flask
 from flask.testing import FlaskClient
 from decorators import authorize_request
@@ -16,12 +17,19 @@ class AuthorizeRequestTests(unittest.TestCase):
 
     def test_authorized_request(self):
         with self.app.test_client() as client:
-            response = client.get('/test', headers={'X-API-KEY': 'valid_key'})
-            self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.json, {'test': 'Authorized'})
+            with patch('db.DB.validate_api_key', return_value=True):
+                response = client.get('/test', headers={'X-API-KEY': 'random-key'})
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json, {'test': 'Authorized'})
 
-    def test_unauthorized_request(self):
+    def test_unauthorized_request_missing_header(self):
         with self.app.test_client() as client:
             response = client.get('/test')
+            self.assertEqual(response.status_code, 401)
+            self.assertEqual(response.json, {'error': 'Unauthorized'})
+
+    def test_authorized_request_wrong_header(self):
+        with self.app.test_client() as client:
+            response = client.get('/test', headers={'X-API-KEY': 'random-key'})
             self.assertEqual(response.status_code, 401)
             self.assertEqual(response.json, {'error': 'Unauthorized'})

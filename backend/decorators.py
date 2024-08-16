@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from db import DB
 
 def authorize_request(function):
     """
@@ -14,6 +15,10 @@ def authorize_request(function):
     
     def inner(*args, **kwargs):
         if AUTHORIZATION_HEADER not in request.headers:
+            return error_response()
+        
+        api_key = request.headers[AUTHORIZATION_HEADER]
+        if not DB().validate_api_key(api_key):
             return error_response()
         
         return function(*args, **kwargs)
