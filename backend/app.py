@@ -1,6 +1,7 @@
 import logging
 from flask import Flask, request, jsonify
 from models.audio import Audio
+from decorators import authorize_request
 from db import DB
 
 app = Flask(__name__)
@@ -26,6 +27,7 @@ def index():
     return 'pong'
 
 @app.route('/transcribe', methods=['POST'])
+@authorize_request
 def transcribe():
     audio_file = request.files['audio']
     file_name = f"storage/{audio_file.filename}"
