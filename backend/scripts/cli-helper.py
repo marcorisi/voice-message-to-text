@@ -7,13 +7,13 @@ from db import DB
 
 def show_numbers_of_audio_stored_in_db(db: DB):
     os.system('clear')
-    all_records = db.get_all()
+    all_records = db.get_all_audio()
     print(f"Number of audio stored in the DB: {len(all_records)}\n")
     input("Press Enter to continue...")
 
 def show_all_items_stored_in_db(db: DB):
     os.system('clear')
-    all_records = db.get_all()
+    all_records = db.get_all_audio()
     if not all_records:
         print("DB is empty.\n")
         print("Press Enter to continue...")
@@ -30,7 +30,7 @@ def show_all_items_stored_in_db(db: DB):
 
 def truncate_db(db: DB):
     os.system('clear')
-    print("Are you sure you want to delete all the items stored in the DB? (y/N)")
+    print("Are you sure you want to delete all the audio items stored in the DB? (y/N)")
     answer = input()
     if answer.lower() != 'y':
         return
