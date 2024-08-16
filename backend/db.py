@@ -84,6 +84,20 @@ class DB:
         """
         return self.db.table(self.API_KEY_TABLE).all()
     
+    def validate_api_key(self, key):
+        """
+        Find an API key in the database.
+
+        Args:
+            key (str): The API key to find.
+
+        Returns:
+            bool: True if the key is found, False otherwise.
+        """
+        ApiKey = Query()
+        key_found = self.db.table(self.API_KEY_TABLE).get(ApiKey.key == key)
+        return key_found is not None
+    
     def truncate(self):
         """
         Remove all audio records from the database.

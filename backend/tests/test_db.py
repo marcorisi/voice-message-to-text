@@ -90,6 +90,14 @@ class DBTests(unittest.TestCase):
         all_items = self.db.get_all_audio()
         self.assertEqual(0, len(all_items))
         self.assertEqual([], all_items)
+
+    def test_validate_api_key_valid_key(self):
+        user = "test_user"
+        api_key = self.db.generate_key_for_user(user)
+        self.assertTrue(self.db.validate_api_key(api_key.key))
+
+    def test_validate_api_key_invalid_key(self):
+        self.assertFalse(self.db.validate_api_key("invalid_key"))
     
     def tearDown(self):
         self.db.db.close()
