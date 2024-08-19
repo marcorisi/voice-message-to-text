@@ -2,3 +2,4 @@ Flask
 openai-whisper
 tinydb
 gunicorn
+ffmpeg-python
