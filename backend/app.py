@@ -44,6 +44,12 @@ def transcribe():
         return response, 200
     
     my_audio = Audio(file_name)
+    if not my_audio.is_valid():
+        log_request(request, 400, "Audio is not valid")
+        response = jsonify({ "error" : "Audio is not valid" })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
+    
     my_audio.transcribe()
     db.insert_audio(my_audio)
 
