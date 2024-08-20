@@ -1,5 +1,6 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
+from werkzeug.exceptions import Unauthorized
 from flask import Flask
 from flask.testing import FlaskClient
 from decorators import authorize_request
@@ -26,10 +27,10 @@ class AuthorizeRequestTests(unittest.TestCase):
         with self.app.test_client() as client:
             response = client.get('/test')
             self.assertEqual(response.status_code, 401)
-            self.assertEqual(response.json, {'error': 'Unauthorized'})
-
+            self.assertIn('API key missing', response.text)
+            
     def test_authorized_request_wrong_header(self):
         with self.app.test_client() as client:
             response = client.get('/test', headers={'X-API-KEY': 'random-key'})
             self.assertEqual(response.status_code, 401)
-            self.assertEqual(response.json, {'error': 'Unauthorized'})
+            self.assertIn('Invalid API key', response.text)

@@ -1,5 +1,6 @@
 import logging
 from flask import Flask, request, jsonify
+from werkzeug.exceptions import HTTPException, BadRequest
 from models.audio import Audio
 from decorators import authorize_request
 from db import DB
@@ -21,6 +22,14 @@ def log_request(request, status_code, operation):
     - None
     """
     logging.info(f"{request.method} {request.path} - Status Code: {status_code} - Operation: {operation}")
+
+@app.errorhandler(HTTPException)
+def handle_exception(exception: HTTPException):
+    status_code = exception.code
+    log_request(request, status_code, exception.description)
+    response = jsonify({ "error": exception.description })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, status_code
 
 @app.route('/ping', methods=['GET'])
 def index():
@@ -45,10 +54,7 @@ def transcribe():
     
     my_audio = Audio(file_name)
     if not my_audio.is_valid():
-        log_request(request, 400, "Audio is not valid")
-        response = jsonify({ "error" : "Audio is not valid" })
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response, 400
+        raise BadRequest("Audio is not valid")
     
     my_audio.transcribe()
     db.insert_audio(my_audio)

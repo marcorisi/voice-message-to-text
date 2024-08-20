@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from werkzeug.exceptions import Unauthorized
 from db import DB
 
 def authorize_request(function):
@@ -7,19 +8,13 @@ def authorize_request(function):
     """
     AUTHORIZATION_HEADER = 'X-API-KEY'
 
-    def error_response(message: str = None):
-        message = message or "Unauthorized"
-        response = jsonify({ "error" : message })
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response, 401
-    
     def inner(*args, **kwargs):
         if AUTHORIZATION_HEADER not in request.headers:
-            return error_response()
+            raise Unauthorized("API key missing")
         
         api_key = request.headers[AUTHORIZATION_HEADER]
         if not DB().validate_api_key(api_key):
-            return error_response()
+            raise Unauthorized("Invalid API key")
         
         return function(*args, **kwargs)
     
