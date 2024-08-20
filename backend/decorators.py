@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request
 from werkzeug.exceptions import Unauthorized
 from db import DB
 
