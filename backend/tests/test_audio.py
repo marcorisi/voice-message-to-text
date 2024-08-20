@@ -29,6 +29,61 @@ class AudioTests(unittest.TestCase):
         self.assertEqual(actual_id, expected_id)
         self.assertIsInstance(expected_id, str, "The ID is not a string")
 
+    def test_is_valid_no_stream(self):
+        probe_mock = MagicMock()
+        probe_mock.return_value = {}
+
+        with unittest.mock.patch("ffmpeg.probe", probe_mock):
+            self.assertFalse(self.audio.is_valid())
+    
+    def test_is_valid_long_audio(self):
+        probe_mock = MagicMock()
+        probe_mock.return_value = {
+            "streams": [
+                {
+                    "index": 0,
+                    "codec_name": "opus",
+                    "codec_type": "audio",
+                    "duration": "120.282167"
+                }
+            ]
+        }
+
+        with unittest.mock.patch("ffmpeg.probe", probe_mock):
+            self.assertFalse(self.audio.is_valid())
+
+    def test_is_valid_no_audio_stream(self):
+        probe_mock = MagicMock()
+        probe_mock.return_value = {
+            "streams": [
+                {
+                    "index": 0,
+                    "codec_name": "h264",
+                    "codec_type": "video",
+                    "duration": "45.282167"
+                }
+            ]
+        }
+
+        with unittest.mock.patch("ffmpeg.probe", probe_mock):
+            self.assertFalse(self.audio.is_valid())
+    
+    def test_is_valid_success(self):
+        probe_mock = MagicMock()
+        probe_mock.return_value = {
+            "streams": [
+                {
+                    "index": 0,
+                    "codec_name": "opus",
+                    "codec_type": "audio",
+                    "duration": "45.282167"
+                }
+            ]
+        }
+
+        with unittest.mock.patch("ffmpeg.probe", probe_mock):
+            self.assertTrue(self.audio.is_valid())
+
     def test_get_audio_length(self):
         whisper_transcribe_result = {
             "segments": [
