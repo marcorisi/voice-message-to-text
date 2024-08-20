@@ -1,6 +1,7 @@
 import whisper
 import hashlib
 from datetime import datetime
+import ffmpeg
 
 class Audio:
     """
@@ -53,6 +54,22 @@ class Audio:
         self.language = None
         self.length = None
         self.transcribed_at = None
+    
+    def is_valid(self):
+        """
+        Checks if the audio file is valid.
+        An audio file is considered valid if it exists and the length is less than 2 minutes.
+
+        Returns:
+        - bool: True if the audio file is valid, False otherwise.
+        """
+        try:
+            probe = ffmpeg.probe(self.audio_file)
+            stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'audio'), None)
+            duration = float(stream['duration'])
+            return duration <= 120
+        except Exception as e:
+            return False
 
     def get_audio_length(self, whisper_transcribe_result):
         """
