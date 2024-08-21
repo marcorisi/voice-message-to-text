@@ -7,7 +7,6 @@ import * as Progress from "react-native-progress";
 import { TextMessage } from './components/text-message';
 import { TextMessageFooter } from './components/text-message-footer';
 import { BackendUrlInput } from "./components/backend-url-input";
-import { FileMeta } from "./components/file-meta";
 import { AudioPlayer } from "./components/audio-player";
 
 export default function App() {
