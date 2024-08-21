@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export function TextMessage({ message }) {
     return (
         <View style={ styles.container }>
-            <Text style={ styles.text }>{message}</Text>
+            <Text style={ styles.text } selectable={true}>{message}</Text>
         </View>
     )
 }
