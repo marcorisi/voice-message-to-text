@@ -1,7 +1,7 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
 import { useShareIntent, ShareIntentFile } from "expo-share-intent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Progress from "react-native-progress";
 
 import { TextMessage } from './components/text-message';
@@ -24,6 +24,12 @@ export default function App() {
   const [transcription, setTranscription] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [url, setUrl] = useState(apiUrl);
+
+  useEffect(() => {
+    if (!hasShareIntent) {
+      setTranscription({});
+    }
+  }, [shareIntent]);
 
   const uploadFileFromMobile = () => {
     uploadFile(shareIntent.files[0]);
@@ -75,6 +81,7 @@ export default function App() {
       })
       .catch((error) => {
         alert(error);
+        setTranscription({})
         setIsLoading(false);
       });
   }
