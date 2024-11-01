@@ -36,6 +36,12 @@ $ eas build --platform android --profile preview
 
 If you want to build your app locally, add `--local` to the last command.
 
+### Update dependencies
+```
+$ npx npm-check-updates -u
+$ npm install
+```
+
 ## Backend
 
 The backend is written in Flask and utilizes virtualenv for dependency management.  
